@@ -42,6 +42,26 @@ async function startSplash() {
   }, 800);
 }
 
+// Image loading with progress tracking
+let loadedImages = 0;
+const totalImages = 16;
+
+// Update loading progress
+function updateLoadingProgress(loaded, total) {
+  const percentage = Math.round((loaded / total) * 100);
+  const progressBar = document.getElementById('progressBar');
+  const loadingPercentage = document.getElementById('loadingPercentage');
+  
+  if (progressBar) {
+    progressBar.style.width = `${percentage}%`;
+    progressBar.style.transition = 'width 0.3s ease';
+  }
+  
+  if (loadingPercentage) {
+    loadingPercentage.textContent = `${percentage}%`;
+  }
+}
+
 // List gambar 1–16
 const imageList = Array.from({ length: 16 }, (_, i) => i + 1);
 
@@ -55,26 +75,44 @@ function resolveImagePath(num) {
     // Try WebP first (best compression)
     const imgWebp = new Image();
     imgWebp.src = pathWebp;
-    imgWebp.onload = () => resolve(pathWebp);
+    imgWebp.onload = () => {
+      loadedImages++;
+      updateLoadingProgress(loadedImages, totalImages);
+      resolve(pathWebp);
+    };
     imgWebp.onerror = () => {
       // Fallback to .jpg
       const imgJpgLower = new Image();
       imgJpgLower.src = pathJpgLower;
-      imgJpgLower.onload = () => resolve(pathJpgLower);
+      imgJpgLower.onload = () => {
+        loadedImages++;
+        updateLoadingProgress(loadedImages, totalImages);
+        resolve(pathJpgLower);
+      };
       imgJpgLower.onerror = () => {
         // Fallback to .JPG
         const imgJpgUpper = new Image();
         imgJpgUpper.src = pathJpgUpper;
-        imgJpgUpper.onload = () => resolve(pathJpgUpper);
-        imgJpgUpper.onerror = () => resolve(null);
+        imgJpgUpper.onload = () => {
+          loadedImages++;
+          updateLoadingProgress(loadedImages, totalImages);
+          resolve(pathJpgUpper);
+        };
+        imgJpgUpper.onerror = () => {
+          loadedImages++;
+          updateLoadingProgress(loadedImages, totalImages);
+          resolve(null);
+        };
       };
     };
   });
 }
 
-// Load images and start marquee
+// Load images and start marquee (use preloaded images)
 async function loadAndStart() {
-  const images = await Promise.all(imageList.map(resolveImagePath));
+  // Use preloaded images if available, otherwise load them
+  const images = window.preloadedImages || await Promise.all(imageList.map(resolveImagePath));
+  
   const groups = [
     images.slice(0, 4),
     images.slice(4, 8),
@@ -149,6 +187,37 @@ function setupParallaxScroll() {
 
 // Initialize application
 document.addEventListener('DOMContentLoaded', () => {
-  // Start splash animation immediately
-  startSplash();
+  // Start loading screen first
+  startLoadingSequence();
 });
+
+// Main loading sequence
+async function startLoadingSequence() {
+  // Loading screen is visible by default
+  // Start loading images immediately when loading screen is shown
+  await preloadImages();
+  
+  // Hide loading screen
+  const loadingScreen = document.getElementById('loadingScreen');
+  loadingScreen.classList.add('hidden');
+  
+  // Wait for loading screen to fade out, then start splash
+  setTimeout(() => {
+    startSplash();
+  }, 500);
+}
+
+// Preload all images before showing splash
+async function preloadImages() {
+  // Reset counter
+  loadedImages = 0;
+  updateLoadingProgress(0, totalImages);
+  
+  const images = await Promise.all(imageList.map(resolveImagePath));
+  
+  // Store loaded images for later use
+  window.preloadedImages = images;
+  
+  // Wait a bit to show loading complete status
+  await new Promise(resolve => setTimeout(resolve, 800));
+}
