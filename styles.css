@@ -486,6 +486,50 @@ body {
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
+.hall-decor-9 {
+  position: absolute;
+  top: -130px;
+  left: -100px;
+  z-index: 10;
+  opacity: 1;
+  transform: rotate(-15deg);
+}
+
+.hall-decor-9 img {
+  width: 350px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.hall-decor-7 {
+  position: absolute;
+  top: 100px;
+  left: 200px;
+  z-index: 10;
+  opacity: 1;
+}
+
+.hall-decor-7 img {
+  width: 400px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.hall-decor-5 {
+  position: absolute;
+  bottom: -50px;
+  right: 260px;
+  z-index: 10;
+  opacity: 1;
+}
+
+.hall-decor-5 img {
+  width: 350px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+
 .hall-of-fame-info {
   flex: 1;
   padding-left: 40px;
@@ -504,6 +548,22 @@ body {
 
 .hall-decor-2 img {
   width: 450px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+.hall-decor-10 {
+  position: absolute;
+  top: -30px;
+  right: 30px;
+  z-index: 5;
+  opacity: 1;
+  transform: rotate(30deg);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hall-decor-10 img {
+  width: 150px;
   height: auto;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
@@ -597,6 +657,20 @@ body {
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
+.hall-decor-11 {
+  position: absolute;
+  top: -90px;
+  right: -100px;
+  z-index: 10;
+  opacity: 1;
+}
+
+.hall-decor-11 img {
+  width: 300px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
 .hall-decor-4 {
   position: absolute;
   top: -100px;
@@ -609,6 +683,22 @@ body {
 
 .hall-decor-4 img {
   width: 200px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+.hall-decor-8 {
+  position: absolute;
+  bottom: -100px;
+  left: 270px;
+  z-index: 5;
+  opacity: 1;
+  transform: rotate(15deg);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hall-decor-8 img {
+  width: 250px;
   height: auto;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
