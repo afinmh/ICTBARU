@@ -27,7 +27,7 @@ async function startSplash() {
   const typingElement = document.getElementById('typingText');
   
   // Wait 1.5 seconds before starting typing animation
-  await new Promise(resolve => setTimeout(resolve, 1500));
+  await new Promise(resolve => setTimeout(resolve, 500));
   
   await typeText('ICT LABORATORY', typingElement, 120);
   
