@@ -143,36 +143,48 @@ async function loadAndStart() {
 function setupParallaxScroll() {
   const marqueeParallax = document.getElementById('marqueeParallax');
   const heroSection = document.getElementById('heroSection');
+  const hallOfFame = document.getElementById('hallOfFame');
+  const navbar = document.getElementById('navbar');
   let ticking = false;
   
   function updateParallax() {
     const scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
     
-    // Calculate scroll progress (0 to 1)
-    const scrollProgress = Math.min(scrollY / windowHeight, 1);
+    // Calculate scroll progress (0 to 1.5 for shorter parallax)
+    const scrollProgress = Math.min(scrollY / windowHeight, 1.5);
     
     // Always reset classes first for smooth transitions
     marqueeParallax.classList.remove('shrink', 'compact', 'blur');
-    heroSection.classList.remove('visible');
+    heroSection.classList.remove('visible', 'show-right');
+    navbar.classList.remove('visible');
     
     // Apply effects based on scroll progress with smooth transitions
-    if (scrollProgress > 0) {
+    if (scrollProgress > 0 && scrollProgress < 0.5) {
       // Stage 1: Shrink gaps immediately when scrolling starts (0-50% scroll)
       marqueeParallax.classList.add('shrink');
     }
-    
-    if (scrollProgress >= 0.5 && scrollProgress < 0.75) {
+    else if (scrollProgress >= 0.5 && scrollProgress < 0.75) {
       // Stage 2: Complete compaction (50-75% scroll)
       marqueeParallax.classList.remove('shrink');
       marqueeParallax.classList.add('compact');
     }
-    else if (scrollProgress >= 0.75) {
-      // Stage 3: Blur and show hero (75-100% scroll)
+    else if (scrollProgress >= 0.75 && scrollProgress < 1.0) {
+      // Stage 3: Blur and show hero left only (75-100% scroll)
       marqueeParallax.classList.add('compact', 'blur');
       heroSection.classList.add('visible');
     }
-    // When scrollProgress < 0.2, all classes are removed (default state)
+    else if (scrollProgress >= 1.0) {
+      // Stage 4: Show hero right content dan mulai Hall of Fame (100%+ scroll)
+      marqueeParallax.classList.add('compact', 'blur');
+      heroSection.classList.add('visible', 'show-right');
+      
+      // Show navbar saat masuk Hall of Fame
+      const hallOfFameRect = hallOfFame.getBoundingClientRect();
+      if (hallOfFameRect.top <= 100) {
+        navbar.classList.add('visible');
+      }
+    }
     
     ticking = false;
   }
