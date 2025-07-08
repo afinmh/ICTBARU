@@ -919,7 +919,7 @@ body {
 .contact-info {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 25px;
 }
 
 .contact-item h3 {
@@ -1464,7 +1464,7 @@ body {
   }
   
   .contact-info {
-    gap: 30px;
+    gap: 20px;
   }
   
   .contact-item h3 {
